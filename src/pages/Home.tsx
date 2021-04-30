@@ -65,7 +65,6 @@ const Home = defineComponent({
       }
     })
 
-
     const netWorthByDate = netWorth.reduce((acc : any, entry) => {
       const date = entry.time.split("T")[0].split("-")
       const month = date[0] + "-" + date[1]
@@ -80,10 +79,13 @@ const Home = defineComponent({
       currency: 'CAD',
     });
 
-    const cadTotal = cadBalance.value.toLocaleString('en-US', {
+    const cadTotal = cadBalance.value.toLocaleString('en-CA', {
       style: 'currency',
       currency: 'CAD',
     });
+
+    const btcTotal = (btcBalance.value).toFixed(9)
+    const ethTotal = (ethBalance.value).toFixed(9)
 
     const chartOptions = {
       type: "line",
@@ -121,14 +123,17 @@ const Home = defineComponent({
     })
     
     return () => {
-      console.log(netWorth)
       return (<main class="bg-gray-100 p-4">
-        <div class="bg-gray-900 flex flex-wrap justify-between p-4 mb-4 mx-auto max-w-[1200px] rounded-md w-full">
-          <p class="font-semibold mb-2 mr-4 text-white">Net Worth: {total}</p>
+        <div class="bg-gray-900 sm:flex flex-wrap justify-between p-4 mb-4 mx-auto max-w-[1200px] rounded-md w-full">
+          <div class="mb-8 sm:mb-0 mr-4">
+            <h3 class="font-semibold mb-2 text-white">Net Worth:</h3>
+            <span class="text-white">{total}</span>
+          </div>
           <div>
-            <p class="font-semibold mb-2 text-white">CAD: {cadTotal}</p>
-            <p class="font-semibold mb-2 text-white">BTC: {btcBalance.value * btcCadRate}</p>
-            <p class="font-semibold text-white">ETH: {ethBalance.value * ethCadRate}</p>
+            <h3 class="font-semibold mb-2 text-white ">Your holdings:</h3>
+            <p class="mb-2 text-white">{cadTotal} CAD</p>
+            <p class="mb-2 text-white">{btcTotal} BTC</p>
+            <p class="text-white">{ethTotal} ETH</p>
           </div>
         </div>
         <div class="m-auto max-w-[1200px]">
