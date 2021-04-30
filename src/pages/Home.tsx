@@ -75,7 +75,15 @@ const Home = defineComponent({
 
     const timeKeys = Object.keys(netWorthByDate).sort()
 
-    const total = (cadBalance.value + (btcBalance.value * btcCadRate) + (ethBalance.value * ethCadRate)).toFixed(2)
+    const total = (cadBalance.value + (btcBalance.value * btcCadRate) + (ethBalance.value * ethCadRate)).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'CAD',
+    });
+
+    const cadTotal = cadBalance.value.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'CAD',
+    });
 
     const chartOptions = {
       type: "line",
@@ -114,9 +122,18 @@ const Home = defineComponent({
     
     return () => {
       console.log(netWorth)
-      return (<main class="bg-gray-100">
-        <p>Net Worth: ${total} CAD</p>
-        <canvas class="p-4" id="networth-chart"></canvas>
+      return (<main class="bg-gray-100 p-4">
+        <div class="bg-gray-900 flex flex-wrap justify-between p-4 mb-4 mx-auto max-w-[1200px] rounded-md w-full">
+          <p class="font-semibold mb-2 mr-4 text-white">Net Worth: {total}</p>
+          <div>
+            <p class="font-semibold mb-2 text-white">CAD: {cadTotal}</p>
+            <p class="font-semibold mb-2 text-white">BTC: {btcBalance.value * btcCadRate}</p>
+            <p class="font-semibold text-white">ETH: {ethBalance.value * ethCadRate}</p>
+          </div>
+        </div>
+        <div class="m-auto max-w-[1200px]">
+          <canvas class="" height="400" width="900" id="networth-chart"></canvas>
+        </div>
       </main>)
     }
   }
